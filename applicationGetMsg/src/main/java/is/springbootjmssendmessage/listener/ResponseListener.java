@@ -1,4 +1,4 @@
-package is.springbootjmsgetmessage.listener;
+package is.springbootjmssendmessage.listener;
 
 
 import lombok.extern.slf4j.Slf4j;
@@ -13,18 +13,19 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @Component
 public class ResponseListener {
 
-    private final CopyOnWriteArrayList<is.springbootjmsgetmessage.model.Message> msgList = new CopyOnWriteArrayList();
+    private final CopyOnWriteArrayList<is.springbootjmssendmessage.model.Message> msgList = new CopyOnWriteArrayList();
+    
 
     @JmsListener(destination = "DEV.QUEUE.1")
     public void receive(Message message) throws JMSException {
         if (message != null) {
-            is.springbootjmsgetmessage.model.Message msg = message.getBody(is.springbootjmsgetmessage.model.Message.class);
+            is.springbootjmssendmessage.model.Message msg = message.getBody(is.springbootjmssendmessage.model.Message.class);
             msgList.add(msg);
             log.info(msg.toString());
         }
     }
 
-    public CopyOnWriteArrayList<is.springbootjmsgetmessage.model.Message> getMsgList() {
+    public CopyOnWriteArrayList<is.springbootjmssendmessage.model.Message> getMsgList() {
         return msgList;
     }
 }
