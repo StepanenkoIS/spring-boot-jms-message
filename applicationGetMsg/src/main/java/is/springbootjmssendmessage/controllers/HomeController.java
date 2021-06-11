@@ -16,23 +16,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class HomeController {
 
     @Autowired
-    private JmsTemplate jmsTemplate;
-
-    @Autowired
     private ResponseListener listener;
-
-
-    @GetMapping("send")
-    public String sendMsg(@RequestParam String message, @RequestParam Integer age) {
-        Message msg = new Message(message, age);
-        try {
-            jmsTemplate.convertAndSend("DEV.QUEUE.1", msg);
-            return "OK. send msg: " + msg.toString();
-        } catch (JmsException ex) {
-            ex.printStackTrace();
-            return "FAIL";
-        }
-    }
 
     @GetMapping("get")
     public CopyOnWriteArrayList<Message> getMsg() {
